@@ -15,7 +15,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
     animation: gradientShift 15s ease infinite;
 }
 
@@ -46,6 +46,7 @@ body {
     animation: floatBubble 10s linear infinite;
     animation-delay: calc(var(--i) * -0.5s);
     cursor: pointer;
+    transition: transform 0.1s ease;
 }
 
 .bubbles span.sparkle {
@@ -70,6 +71,29 @@ body {
     0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); transform: scale(1); }
     50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); transform: scale(1.5); }
     100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); transform: scale(1); }
+}
+
+/* Partículas al hacer clic en los botones */
+.click-particle {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    animation: particleBurst 0.5s forwards;
+    z-index: 1000;
+}
+
+@keyframes particleBurst {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy));
+        opacity: 0;
+    }
 }
 
 /* Barras laterales */
@@ -146,7 +170,13 @@ header h1 {
     border-radius: 10px;
     animation: glow 2s infinite alternate, slideIn 1s ease-out, neonFlicker 3s infinite;
     cursor: pointer;
-    transition: text-shadow 0.3s ease;
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+header h1:hover {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5);
+    animation: flash 0.5s;
 }
 
 header h1:active {
@@ -183,6 +213,13 @@ header h1:active {
     20%, 24%, 55% {
         text-shadow: 0 0 5px rgba(255, 215, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.2);
     }
+}
+
+/* Animación de destello al hacer hover */
+@keyframes flash {
+    0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+    50% { text-shadow: 0 0 30px rgba(255, 255, 255, 1); }
+    100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
 }
 
 /* Estilo del logo (ícono estilizado con efecto de electricidad) */
@@ -267,7 +304,9 @@ header h1:active {
 
 .button {
     position: relative;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 15px;
     background: rgba(0, 0, 0, 0.8);
     color: #e0e0e0;
@@ -330,6 +369,27 @@ header h1:active {
 
 .button:hover::before {
     left: 100%;
+}
+
+/* Spinner dentro del botón */
+.button-spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ffd700;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+.button-spinner.active {
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 footer {
@@ -439,7 +499,25 @@ footer.visible {
     animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* Estilos para el selector de idioma */
+.language-selector {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+}
+
+.language-selector select {
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #e0e0e0;
+    border: 2px solid #ffd700;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.language-selector select:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
