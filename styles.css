@@ -342,6 +342,7 @@ header h1:active {
     content: "⚡";
     font-family: inherit;
     color: #ffd700;
+    font-size: 18px;
 }
 
 .button:hover i {
@@ -549,4 +550,4 @@ footer.visible {
 .language-selector select:focus {
     outline: none;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    }
+        }
