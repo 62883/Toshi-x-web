@@ -14,9 +14,15 @@
         <div class="spinner"></div>
     </div>
 
-    <!-- Audio -->
+    <!-- Audio de fondo -->
     <audio id="backgroundMusic" loop>
         <source src="musica.mp3" type="audio/mp3">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
+
+    <!-- Audio para el efecto de clic -->
+    <audio id="clickSound">
+        <source src="click-sound.mp3" type="audio/mp3">
         Tu navegador no soporta la reproducción de audio.
     </audio>
 
@@ -41,38 +47,49 @@
     <!-- Cortina de bienvenida -->
     <div id="welcomeCurtain" class="curtain" style="display: none;">
         <div class="curtain-content">
-            <h2>⚡ Bienvenido al Servidor de Toshi x ⚡</h2>
-            <p>Toca para entrar</p>
+            <h2 data-lang-es="⚡ Bienvenido al Servidor de Toshi x ⚡" data-lang-en="⚡ Welcome to Toshi x Server ⚡">⚡ Bienvenido al Servidor de Toshi x ⚡</h2>
+            <p data-lang-es="Toca para entrar" data-lang-en="Tap to enter">Toca para entrar</p>
         </div>
+    </div>
+
+    <!-- Selector de idioma -->
+    <div class="language-selector">
+        <select id="languageSelect">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+        </select>
     </div>
 
     <!-- Contenido principal (inicialmente oculto) -->
     <div id="mainContent" class="container" style="display: none;">
         <header>
-            <h1>Servidor de Toshi x</h1>
+            <h1 data-lang-es="Servidor de Toshi x" data-lang-en="Toshi x Server">Servidor de Toshi x</h1>
         </header>
         <div class="logo">
             <div class="logo-icon" id="logoIcon">⚡</div>
         </div>
         <div class="buttons">
-            <a href="https://discord.gg/kcEx8yeX" class="button"><i class="fab fa-discord"></i> Discord</a>
-            <a href="https://youtube.com/@toshiscript?si=UQo7kKsqLHG9RdJr" class="button"><i class="fab fa-youtube"></i> YouTube</a>
-            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button"><i class="fas fa-gamepad"></i> Roblox</a>
+            <a href="https://discord.gg/kcEx8yeX" class="button" data-lang-es="Discord" data-lang-en="Discord"><i class="fab fa-discord"></i> <span>Discord</span> <span class="button-spinner"></span></a>
+            <a href="https://youtube.com/@toshiscript?si=UQo7kKsqLHG9RdJr" class="button" data-lang-es="YouTube" data-lang-en="YouTube"><i class="fab fa-youtube"></i> <span>YouTube</span> <span class="button-spinner"></span></a>
+            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button" data-lang-es="Roblox" data-lang-en="Roblox"><i class="fas fa-gamepad"></i> <span>Roblox</span> <span class="button-spinner"></span></a>
         </div>
         <footer>
-            <p>© 2025 TuNombre. Todos los derechos reservados.</p>
+            <p data-lang-es="© 2025 TuNombre. Todos los derechos reservados." data-lang-en="© 2025 YourName. All rights reserved.">© 2025 TuNombre. Todos los derechos reservados.</p>
         </footer>
     </div>
 
-    <!-- Script para manejar la cortina, la música, los botones, el rayo, el footer y las partículas -->
+    <!-- Script para manejar la cortina, la música, los botones, el rayo, el footer, las partículas, y las nuevas funcionalidades -->
     <script>
         const loader = document.getElementById('loader');
         const curtain = document.getElementById('welcomeCurtain');
         const mainContent = document.getElementById('mainContent');
         const audio = document.getElementById('backgroundMusic');
+        const clickSound = document.getElementById('clickSound');
         const logoIcon = document.getElementById('logoIcon');
         const footer = document.querySelector('footer');
         const bubbles = document.querySelectorAll('.bubbles span');
+        const buttons = document.querySelectorAll('.button');
+        const languageSelect = document.getElementById('languageSelect');
 
         // Mostrar la cortina después de 2 segundos
         setTimeout(() => {
@@ -100,13 +117,14 @@
         });
 
         // Script para añadir retrasos a los botones
-        document.querySelectorAll('.button').forEach((button, index) => {
+        buttons.forEach((button, index) => {
             button.style.setProperty('--i', index);
         });
 
         // Script para la animación de vibración del rayo
         logoIcon.addEventListener('click', () => {
             logoIcon.classList.add('vibrate');
+            playClickSound();
         });
 
         // Script para el footer
@@ -117,12 +135,101 @@
             }
         });
 
-        // Script para las partículas
+        // Script para las partículas al hacer clic en los botones
+        buttons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                playClickSound();
+                createParticles(e.clientX, e.clientY);
+                const spinner = button.querySelector('.button-spinner');
+                spinner.classList.add('active');
+                setTimeout(() => {
+                    spinner.classList.remove('active');
+                }, 1000);
+            });
+        });
+
+        function createParticles(x, y) {
+            const particleCount = 10;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('click-particle');
+                document.body.appendChild(particle);
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 50 + 20;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance;
+                particle.style.setProperty('--dx', `${dx}px`);
+                particle.style.setProperty('--dy', `${dy}px`);
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
+        }
+
+        // Script para las partículas del fondo (parallax)
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            bubbles.forEach(bubble => {
+                const speed = bubble.style.getPropertyValue('--i') * 0.02;
+                bubble.style.transform = `translateY(${scrollPosition * speed}px)`;
+            });
+        });
+
+        // Script para las partículas al hacer clic en las burbujas
         bubbles.forEach(bubble => {
             bubble.addEventListener('click', () => {
                 bubble.classList.add('sparkle');
             });
         });
+
+        // Script para el soporte multilenguaje
+        const translations = {
+            es: {
+                welcome: "⚡ Bienvenido al Servidor de Toshi x ⚡",
+                tap: "Toca para entrar",
+                title: "Servidor de Toshi x",
+                discord: "Discord",
+                youtube: "YouTube",
+                roblox: "Roblox",
+                footer: "© 2025 TuNombre. Todos los derechos reservados."
+            },
+            en: {
+                welcome: "⚡ Welcome to Toshi x Server ⚡",
+                tap: "Tap to enter",
+                title: "Toshi x Server",
+                discord: "Discord",
+                youtube: "YouTube",
+                roblox: "Roblox",
+                footer: "© 2025 YourName. All rights reserved."
+            }
+        };
+
+        function updateLanguage(lang) {
+            document.querySelector('[data-lang-es="⚡ Bienvenido al Servidor de Toshi x ⚡"]').textContent = translations[lang].welcome;
+            document.querySelector('[data-lang-es="Toca para entrar"]').textContent = translations[lang].tap;
+            document.querySelector('[data-lang-es="Servidor de Toshi x"]').textContent = translations[lang].title;
+            document.querySelector('[data-lang-es="Discord"] span').textContent = translations[lang].discord;
+            document.querySelector('[data-lang-es="YouTube"] span').textContent = translations[lang].youtube;
+            document.querySelector('[data-lang-es="Roblox"] span').textContent = translations[lang].roblox;
+            document.querySelector('[data-lang-es="© 2025 TuNombre. Todos los derechos reservados."]').textContent = translations[lang].footer;
+        }
+
+        languageSelect.addEventListener('change', (e) => {
+            updateLanguage(e.target.value);
+        });
+
+        // Inicializar el idioma
+        updateLanguage('es');
+
+        // Script para reproducir el sonido de clic
+        function playClickSound() {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(error => {
+                console.error("Error al reproducir el sonido de clic:", error);
+            });
+        }
 
         // Verificar si Font Awesome se cargó correctamente
         if (typeof window.FontAwesome === 'undefined') {
