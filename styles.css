@@ -282,8 +282,10 @@ header h1:active {
     --i: 0;
 }
 
-.button i {
+.button i,
+.button img {
     margin-right: 8px;
+    vertical-align: middle;
 }
 
 .button:hover {
@@ -313,6 +315,13 @@ header h1:active {
 
 .button:hover::before {
     left: 100%;
+}
+
+.button-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
 }
 
 footer {
@@ -425,4 +434,4 @@ footer.visible {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-                              }
+                                   }
