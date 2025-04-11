@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servidor de Toshi x</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Audio -->
+    <audio id="backgroundMusic" loop>
+        <source src="musica.mp3" type="audio/mp3">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
+
+    <!-- Formas flotantes en el fondo -->
+    <div class="bubbles">
+        <span style="--i: 11;"></span>
+        <span style="--i: 13;"></span>
+        <span style="--i: 15;"></span>
+        <span style="--i: 17;"></span>
+        <span style="--i: 19;"></span>
+        <span style="--i: 21;"></span>
+        <span style="--i: 23;"></span>
+        <span style="--i: 25;"></span>
+        <span style="--i: 27;"></span>
+        <span style="--i: 29;"></span>
+    </div>
+
+    <!-- Barras laterales -->
+    <div class="sidebar left"></div>
+    <div class="sidebar right"></div>
+
+    <!-- Cortina de bienvenida -->
+    <div id="welcomeCurtain" class="curtain">
+        <div class="curtain-content">
+            <h2>⚡ Bienvenido al Servidor de Toshi x ⚡</h2>
+            <p>Toca para entrar</p>
+        </div>
+    </div>
+
+    <!-- Contenido principal (inicialmente oculto) -->
+    <div id="mainContent" class="container" style="display: none;">
+        <header>
+            <h1>Servidor de Toshi x</h1>
+        </header>
+        <div class="logo">
+            <div class="logo-icon">⚡</div>
+        </div>
+        <div class="buttons">
+            <a href="https://discord.com" class="button">Discord</a>
+            <a href="https://roblox.is" class="button highlight">Generador Roblox.is</a>
+            <a href="https://roblox.com-py" class="button">Generador Roblox.com-py</a>
+            <a href="#" class="button">MultiGenerador (Recomendable)</a>
+            <a href="https://waw-roblox.com" class="button">Generador waw-roblox.com</a>
+        </div>
+        <footer>
+            <p>© 2025 TuNombre. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Script para manejar la cortina, la música y los botones -->
+    <script>
+        const curtain = document.getElementById('welcomeCurtain');
+        const mainContent = document.getElementById('mainContent');
+        const audio = document.getElementById('backgroundMusic');
+
+        curtain.addEventListener('click', () => {
+            curtain.classList.add('fade-out');
+            audio.play().then(() => {
+                audio.volume = 0.3;
+            }).catch(error => {
+                console.error("Error al reproducir el audio:", error);
+                alert("No se pudo reproducir la música. Asegúrate de que el archivo de audio esté disponible.");
+            });
+        });
+
+        curtain.addEventListener('animationend', () => {
+            curtain.style.display = 'none';
+            mainContent.style.display = 'block';
+        });
+
+        // Script para añadir retrasos a los botones
+        document.querySelectorAll('.button').forEach((button, index) => {
+            button.style.setProperty('--i', index);
+        });
+    </script>
+</body>
+</html>
