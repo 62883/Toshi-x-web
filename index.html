@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servidor de Toshi x</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Spinner de carga -->
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+    </div>
+
     <!-- Audio -->
     <audio id="backgroundMusic" loop>
         <source src="musica.mp3" type="audio/mp3">
@@ -32,7 +39,7 @@
     <div class="sidebar right"></div>
 
     <!-- Cortina de bienvenida -->
-    <div id="welcomeCurtain" class="curtain">
+    <div id="welcomeCurtain" class="curtain" style="display: none;">
         <div class="curtain-content">
             <h2>⚡ Bienvenido al Servidor de Toshi x ⚡</h2>
             <p>Toca para entrar</p>
@@ -45,23 +52,33 @@
             <h1>Servidor de Toshi x</h1>
         </header>
         <div class="logo">
-            <div class="logo-icon">⚡</div>
+            <div class="logo-icon" id="logoIcon">⚡</div>
         </div>
         <div class="buttons">
-            <a href="https://discord.gg/kcEx8yeX" class="button">Discord</a>
-            <a href="https://youtube.com/@toshiscript?si=UQo7kKsqLHG9RdJr" class="button">YouTube</a>
-            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button">Roblox</a>
+            <a href="https://discord.gg/kcEx8yeX" class="button"><i class="fab fa-discord"></i> Discord</a>
+            <a href="https://youtube.com/@toshiscript?si=UQo7kKsqLHG9RdJr" class="button"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button"><i class="fab fa-roblox"></i> Roblox</a>
         </div>
         <footer>
             <p>© 2025 TuNombre. Todos los derechos reservados.</p>
         </footer>
     </div>
 
-    <!-- Script para manejar la cortina, la música y los botones -->
+    <!-- Script para manejar la cortina, la música, los botones, el rayo, el footer y las partículas -->
     <script>
+        const loader = document.getElementById('loader');
         const curtain = document.getElementById('welcomeCurtain');
         const mainContent = document.getElementById('mainContent');
         const audio = document.getElementById('backgroundMusic');
+        const logoIcon = document.getElementById('logoIcon');
+        const footer = document.querySelector('footer');
+        const bubbles = document.querySelectorAll('.bubbles span');
+
+        // Mostrar la cortina después de 2 segundos
+        setTimeout(() => {
+            loader.style.display = 'none';
+            curtain.style.display = 'flex';
+        }, 2000);
 
         curtain.addEventListener('click', () => {
             curtain.classList.add('fade-out');
@@ -82,6 +99,26 @@
         document.querySelectorAll('.button').forEach((button, index) => {
             button.style.setProperty('--i', index);
         });
+
+        // Script para la animación de vibración del rayo
+        logoIcon.addEventListener('click', () => {
+            logoIcon.classList.add('vibrate');
+        });
+
+        // Script para el footer
+        window.addEventListener('scroll', () => {
+            const footerPosition = footer.getBoundingClientRect();
+            if (footerPosition.top < window.innerHeight && footerPosition.bottom >= 0) {
+                footer.classList.add('visible');
+            }
+        });
+
+        // Script para las partículas
+        bubbles.forEach(bubble => {
+            bubble.addEventListener('click', () => {
+                bubble.classList.add('sparkle');
+            });
+        });
     </script>
 </body>
-    </html>
+</html>
