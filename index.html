@@ -232,9 +232,15 @@
         }
 
         // Verificar si Font Awesome se cargó correctamente
-        if (typeof window.FontAwesome === 'undefined') {
-            console.error("Font Awesome no se cargó correctamente. Verifica la URL o tu conexión a internet.");
-        }
+        window.addEventListener('load', () => {
+            if (typeof window.FontAwesome === 'undefined') {
+                console.error("Font Awesome no se cargó correctamente. Verifica la URL o tu conexión a internet.");
+                // Mostrar un respaldo visual
+                document.querySelectorAll('.button i').forEach(icon => {
+                    icon.classList.add('icon-fallback');
+                });
+            }
+        });
     </script>
 </body>
 </html>
