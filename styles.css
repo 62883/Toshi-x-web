@@ -282,10 +282,25 @@ header h1:active {
     --i: 0;
 }
 
-.button i,
-.button img {
+.button i {
     margin-right: 8px;
-    vertical-align: middle;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.button i::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+/* Estilo de respaldo si el ícono no se carga */
+.button i:empty::before {
+    content: "⚡";
+    font-family: inherit;
+    color: #ffd700;
 }
 
 .button:hover {
@@ -315,13 +330,6 @@ header h1:active {
 
 .button:hover::before {
     left: 100%;
-}
-
-.button-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-    vertical-align: middle;
 }
 
 footer {
@@ -434,4 +442,4 @@ footer.visible {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-                                   }
+    }
