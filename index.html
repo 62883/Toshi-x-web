@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servidor de Toshi x</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -57,7 +57,7 @@
         <div class="buttons">
             <a href="https://discord.gg/kcEx8yeX" class="button"><i class="fab fa-discord"></i> Discord</a>
             <a href="https://youtube.com/@toshiscript?si=UQo7kKsqLHG9RdJr" class="button"><i class="fab fa-youtube"></i> YouTube</a>
-            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button"><img src="roblox-icon.png" alt="Roblox Icon" class="button-icon"> Roblox</a>
+            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button"><i class="fas fa-gamepad"></i> Roblox</a>
         </div>
         <footer>
             <p>© 2025 TuNombre. Todos los derechos reservados.</p>
@@ -80,7 +80,7 @@
             curtain.style.display = 'flex';
         }, 2000);
 
-        // Asegurarse de que la cortina solo se desvanezca al hacer clic
+        // Solo desvanecer la cortina al hacer clic
         curtain.addEventListener('click', () => {
             curtain.classList.add('fade-out');
             audio.play().then(() => {
@@ -91,9 +91,12 @@
             });
         });
 
-        curtain.addEventListener('animationend', () => {
-            curtain.style.display = 'none';
-            mainContent.style.display = 'block';
+        // Mostrar el contenido principal después de que la cortina se desvanezca
+        curtain.addEventListener('animationend', (event) => {
+            if (event.animationName === 'fadeOut') {
+                curtain.style.display = 'none';
+                mainContent.style.display = 'block';
+            }
         });
 
         // Script para añadir retrasos a los botones
@@ -120,6 +123,11 @@
                 bubble.classList.add('sparkle');
             });
         });
+
+        // Verificar si Font Awesome se cargó correctamente
+        if (typeof window.FontAwesome === 'undefined') {
+            console.error("Font Awesome no se cargó correctamente. Verifica la URL o tu conexión a internet.");
+        }
     </script>
 </body>
 </html>
