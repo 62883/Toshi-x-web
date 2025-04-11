@@ -249,17 +249,6 @@ header h1 {
     left: 100%;
 }
 
-.button.highlight {
-    background: #ffd700;
-    color: #1e2a44;
-    border: 2px solid #ffd700;
-}
-
-.button.highlight:hover {
-    background: #ffeb3b;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
-}
-
 footer {
     margin-top: 30px;
     font-size: 0.9rem;
