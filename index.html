@@ -69,9 +69,15 @@
             <div class="logo-icon" id="logoIcon">⚡</div>
         </div>
         <div class="buttons">
-            <a href="https://discord.gg/kcEx8yeX" class="button" data-lang-es="Discord" data-lang-en="Discord"><i class="fab fa-discord"></i> <span>Discord</span> <span class="button-spinner"></span></a>
-            <a href="https://youtube.com/@toshiscript?si=UQo7kKsqLHG9RdJr" class="button" data-lang-es="YouTube" data-lang-en="YouTube"><i class="fab fa-youtube"></i> <span>YouTube</span> <span class="button-spinner"></span></a>
-            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button" data-lang-es="Roblox" data-lang-en="Roblox"><i class="fas fa-gamepad"></i> <span>Roblox</span> <span class="button-spinner"></span></a>
+            <a href="https://discord.gg/kcEx8yeX" class="button" data-lang-es="Discord" data-lang-en="Discord">
+                <i class="fab fa-discord"></i> <span>Discord</span> <span class="button-spinner"></span>
+            </a>
+            <a href="https://youtube.com/@toshiscript?si=UQo7kKsqLHG9RdJr" class="button" data-lang-es="YouTube" data-lang-en="YouTube">
+                <i class="fab fa-youtube"></i> <span>YouTube</span> <span class="button-spinner"></span>
+            </a>
+            <a href="https://www.roblox.com/es/users/5710413411/profile" class="button" data-lang-es="Roblox" data-lang-en="Roblox">
+                <i class="fas fa-cube"></i> <span>Roblox</span> <span class="button-spinner"></span>
+            </a>
         </div>
         <footer>
             <p data-lang-es="© 2025 TuNombre. Todos los derechos reservados." data-lang-en="© 2025 YourName. All rights reserved.">© 2025 TuNombre. Todos los derechos reservados.</p>
@@ -235,10 +241,10 @@
         window.addEventListener('load', () => {
             if (typeof window.FontAwesome === 'undefined') {
                 console.error("Font Awesome no se cargó correctamente. Verifica la URL o tu conexión a internet.");
-                // Mostrar un respaldo visual
                 document.querySelectorAll('.button i').forEach(icon => {
                     icon.classList.add('icon-fallback');
                 });
+                alert("No se pudieron cargar los íconos. Se mostrarán íconos alternativos.");
             }
         });
     </script>
