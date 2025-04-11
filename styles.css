@@ -7,6 +7,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
     background: linear-gradient(135deg, #1e2a44, #2c3e50, #4b6584);
+    background-size: 200% 200%;
     color: #e0e0e0;
     min-height: 100vh;
     margin: 0;
@@ -21,7 +22,7 @@ body {
 /* Animación del degradado de fondo */
 @keyframes gradientShift {
     0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    50% { background-position: 100% 50%; background: linear-gradient(135deg, #2c3e50, #4b6584, #1e2a44); }
     100% { background-position: 0% 50%; }
 }
 
@@ -33,32 +34,42 @@ body {
     width: 100%;
     height: 100%;
     z-index: 0;
-    pointer-events: none;
 }
 
 .bubbles span {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.1);
+    width: 5px;
+    height: 5px;
+    background: #ffd700;
     border-radius: 50%;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    animation: floatBubble 20s linear infinite;
-    animation-delay: calc(var(--i) * -1s);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    animation: floatBubble 10s linear infinite;
+    animation-delay: calc(var(--i) * -0.5s);
+    cursor: pointer;
+}
+
+.bubbles span.sparkle {
+    animation: sparkle 0.5s;
 }
 
 @keyframes floatBubble {
     0% {
-        transform: translateY(100vh) scale(0.5);
+        transform: translateY(100vh) scale(0.3);
         opacity: 0;
     }
     50% {
-        opacity: 0.5;
+        opacity: 1;
     }
     100% {
-        transform: translateY(-100vh) scale(1);
+        transform: translateY(-100vh) scale(0.8);
         opacity: 0;
     }
+}
+
+@keyframes sparkle {
+    0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); transform: scale(1); }
+    50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); transform: scale(1.5); }
+    100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); transform: scale(1); }
 }
 
 /* Barras laterales */
@@ -70,7 +81,13 @@ body {
     background: #ffd700;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
     z-index: 1;
-    animation: glowSidebar 2s infinite alternate;
+    animation: glowSidebar 2s infinite alternate, colorShiftSidebar 5s infinite;
+    transition: width 0.3s ease;
+}
+
+.sidebar:hover {
+    width: 8px;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
 }
 
 .sidebar.left {
@@ -90,12 +107,28 @@ body {
     }
 }
 
+@keyframes colorShiftSidebar {
+    0% { background: #ffd700; }
+    50% { background: #ffffff; }
+    100% { background: #ffd700; }
+}
+
 .container {
     text-align: center;
     padding: 20px;
     width: 100%;
     max-width: 600px;
     z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
 }
 
 /* Estilo del título */
@@ -106,12 +139,18 @@ header h1 {
     font-weight: 700;
     font-size: 2.5rem;
     color: #ffd700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3);
     padding: 10px;
     margin-bottom: 20px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
-    animation: glow 2s infinite alternate, slideIn 1s ease-out;
+    animation: glow 2s infinite alternate, slideIn 1s ease-out, neonFlicker 3s infinite;
+    cursor: pointer;
+    transition: text-shadow 0.3s ease;
+}
+
+header h1:active {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5);
 }
 
 /* Animación de entrada para el título */
@@ -136,6 +175,16 @@ header h1 {
     }
 }
 
+/* Animación de parpadeo de neón */
+@keyframes neonFlicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    20%, 24%, 55% {
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+}
+
 /* Estilo del logo (ícono estilizado con efecto de electricidad) */
 .logo {
     margin-bottom: 20px;
@@ -146,9 +195,28 @@ header h1 {
     font-size: 60px;
     color: #ffd700;
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-    animation: glow 2s infinite alternate;
+    animation: glow 2s infinite alternate, colorShift 5s infinite;
     position: relative;
     display: inline-block;
+    cursor: pointer;
+}
+
+.logo-icon.vibrate {
+    animation: vibrate 0.3s;
+}
+
+@keyframes colorShift {
+    0% { color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+    50% { color: #ffffff; text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+    100% { color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+}
+
+@keyframes vibrate {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-2px); }
+    40% { transform: translateX(2px); }
+    60% { transform: translateX(-2px); }
+    80% { transform: translateX(2px); }
 }
 
 /* Efecto de electricidad con pseudo-elementos */
@@ -214,16 +282,8 @@ header h1 {
     --i: 0;
 }
 
-/* Animación de entrada para los botones */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.button i {
+    margin-right: 8px;
 }
 
 .button:hover {
@@ -233,7 +293,13 @@ header h1 {
     transform: scale(1.03);
 }
 
-/* Efecto de brillo al hacer hover */
+.button:active {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    transform: scale(0.98);
+    background: #ffffff;
+    color: #1e2a44;
+}
+
 .button::before {
     content: '';
     position: absolute;
@@ -254,7 +320,14 @@ footer {
     font-size: 0.9rem;
     color: #b0b0b0;
     animation: fadeIn 1s ease-out forwards;
-    animation-delay: 0.5s;
+    animation-delay: 1s;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+footer.visible {
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 /* Estilos para la cortina de bienvenida */
@@ -270,6 +343,29 @@ footer {
     align-items: center;
     z-index: 1000;
     cursor: pointer;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.curtain:active {
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+}
+
+.curtain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
 }
 
 .curtain-content {
@@ -302,3 +398,31 @@ footer {
     0% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+/* Estilos para el spinner de carga */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1e2a44;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #ffd700;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+                              }
