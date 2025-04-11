@@ -323,11 +323,6 @@ header h1:active {
 
 .button i {
     margin-right: 8px;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
     font-size: 20px;
     color: #e0e0e0;
 }
@@ -460,7 +455,7 @@ footer.visible {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-trip: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
@@ -550,4 +545,4 @@ footer.visible {
 .language-selector select:focus {
     outline: none;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
+            }
