@@ -76,7 +76,7 @@
                 <i class="fab fa-youtube"></i> <span>YouTube</span> <span class="button-spinner"></span>
             </a>
             <a href="https://www.roblox.com/es/users/5710413411/profile" class="button" data-lang-es="Roblox" data-lang-en="Roblox">
-                <i class="fas fa-cube"></i> <span>Roblox</span> <span class="button-spinner"></span>
+                <i class="fas fa-gamepad"></i> <span>Roblox</span> <span class="button-spinner"></span>
             </a>
         </div>
         <footer>
@@ -239,13 +239,15 @@
 
         // Verificar si Font Awesome se cargó correctamente
         window.addEventListener('load', () => {
-            if (typeof window.FontAwesome === 'undefined') {
-                console.error("Font Awesome no se cargó correctamente. Verifica la URL o tu conexión a internet.");
-                document.querySelectorAll('.button i').forEach(icon => {
-                    icon.classList.add('icon-fallback');
-                });
-                alert("No se pudieron cargar los íconos. Se mostrarán íconos alternativos.");
-            }
+            setTimeout(() => {
+                if (!document.querySelector('.fa-discord')) {
+                    console.error("Font Awesome no se cargó correctamente. Verifica la URL o tu conexión a internet.");
+                    document.querySelectorAll('.button i').forEach(icon => {
+                        icon.classList.add('icon-fallback');
+                    });
+                    alert("No se pudieron cargar los íconos. Se mostrarán íconos alternativos.");
+                }
+            }, 1000); // Esperar 1 segundo para asegurar la carga
         });
     </script>
 </body>
